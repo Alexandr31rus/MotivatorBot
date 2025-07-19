@@ -1,4 +1,4 @@
 *.db
-.vevn
+.venv
 .db
 .env
