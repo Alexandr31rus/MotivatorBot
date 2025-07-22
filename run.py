@@ -4,20 +4,23 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
+
 from app.user import user
 from app.database.models import init_models
 
 load_dotenv()
 
+# Подключение логирования
 logging.basicConfig(level=logging.INFO)
+
 
 async def main():
     bot = Bot(token=os.getenv("TOKEN"))
 
     dp = Dispatcher()
-    dp.include_router(user)
-    dp.startup.register(startup)
-    dp.shutdown.register(shutdown)
+    dp.include_router(user)  # Регистрация роутеров
+    dp.startup.register(startup)  # Регистрация функции startup
+    dp.shutdown.register(shutdown)  # Регистрация функции shutdown
 
     await dp.start_polling(bot)
 
