@@ -4,7 +4,7 @@ from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 
 
-from app.database.requests import set_user, update_user
+from app.database.requests import set_user, update_user, select_user
 import app.keyboards as kb
 
 user = Router()
@@ -20,7 +20,11 @@ async def cmd_start(message: Message, state: FSMContext):
         )
         await state.set_state("reg_name")
     else:
-        await message.answer("Добро пожаловать!👋", reply_markup=kb.menu)
+
+        await message.answer(
+            f"{await select_user(message.from_user.id)}, добро пожаловать!👋",
+            reply_markup=kb.menu,
+        )
 
 
 @user.message(StateFilter("reg_name"))
@@ -31,3 +35,4 @@ async def get_reg_name(message: Message, state: FSMContext):
     await message.answer(
         "✅ Вы успешно зарегистрировались!\n\nДобро пожаловать!👋", reply_markup=kb.menu
     )
+    await state.clear()

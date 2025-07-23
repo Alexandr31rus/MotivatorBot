@@ -3,5 +3,4 @@
 .db
 .env
 .vscode
-app/__pycache__/
-*.pyc
+__pycache__/
