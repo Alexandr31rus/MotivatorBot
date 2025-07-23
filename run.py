@@ -26,7 +26,7 @@ async def main():
 
 
 async def startup(dispatcher: Dispatcher):
-    await init_models()
+    await init_models() # Создание таблиц БД
     logging.info("Bot started up...")
 
 

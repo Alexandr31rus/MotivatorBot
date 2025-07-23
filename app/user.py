@@ -9,7 +9,11 @@ import app.keyboards as kb
 
 user = Router()
 
-
+"""
+Проверка пользователя при нажатии команды /start. 
+Если пользователя нет в БД, то предлагает ему зарегистрироваться. 
+Если пользователь есть в БД, то выводит его имя и приветственное сообщение
+"""
 @user.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
     is_user = await set_user(message.from_user.id)
@@ -20,13 +24,14 @@ async def cmd_start(message: Message, state: FSMContext):
         )
         await state.set_state("reg_name")
     else:
-
         await message.answer(
             f"{await select_user(message.from_user.id)}, добро пожаловать!👋",
             reply_markup=kb.menu,
         )
 
-
+"""
+Регистрация пользователя и добавление его имени в БД
+"""
 @user.message(StateFilter("reg_name"))
 async def get_reg_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text.capitalize())
