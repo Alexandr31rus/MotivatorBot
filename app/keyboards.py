@@ -1,7 +1,10 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 menu = ReplyKeyboardMarkup(
-    keyboard=[[KeyboardButton(text="➡ Категории")], [KeyboardButton(text="➡ Меню")]],
+    keyboard=[
+        [KeyboardButton(text="🙎‍♂️ Профиль")],
+        [KeyboardButton(text="📕 Категории")],
+    ],
     resize_keyboard=True,
     input_field_placeholder="Выберите пункт меню... 👇",
 )

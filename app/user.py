@@ -19,13 +19,13 @@ async def cmd_start(message: Message, state: FSMContext):
     is_user = await set_user(message.from_user.id)
     if not is_user:
         await message.answer(
-            "Добро пожаловать!👋\n\nВведите ваше имя",
+            "Добро пожаловать!👋\nПройдите процесс регистрации...\n\nВведите ваше имя или оставьте такое же 👇",
             reply_markup=await kb.user_name(message.from_user.first_name),
         )
         await state.set_state("reg_name")
     else:
         await message.answer(
-            f"{await select_user(message.from_user.id)}, добро пожаловать!👋",
+            f"{await select_user(message.from_user.id)}, добро пожаловать!👋\n\nИспользуй кнопки ниже, чтобы войти в профиль или посмотреть картинки ⬇️",
             reply_markup=kb.menu,
         )
 
@@ -38,6 +38,7 @@ async def get_reg_name(message: Message, state: FSMContext):
     data = await state.get_data()
     await update_user(message.from_user.id, data["name"])
     await message.answer(
-        "✅ Вы успешно зарегистрировались!\n\nДобро пожаловать!👋", reply_markup=kb.menu
+        f"{await select_user(message.from_user.id)}, вы успешно зарегистрировались! ✅\n\nДобро пожаловать!👋",
+        reply_markup=kb.menu,
     )
     await state.clear()
