@@ -3,7 +3,6 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 
-import random
 from app.database.requests import set_user, update_user, select_user, get_card
 import app.keyboards as kb
 
