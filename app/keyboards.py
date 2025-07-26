@@ -69,3 +69,15 @@ async def cards(category_id):
         )
     keyboard.row(InlineKeyboardButton(text="🔙 Назад", callback_data="categories"))
     return keyboard.as_markup()
+
+
+async def back_to_categories(category_id):
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="🔙 Назад", callback_data=f"category_{category_id}"
+                )
+            ]
+        ]
+    )

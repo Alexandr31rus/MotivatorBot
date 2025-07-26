@@ -40,3 +40,9 @@ async def get_cards_by_category(category_id):
         return await session.scalars(
             select(Card).where(Card.category_id == category_id)
         )
+
+
+# По id доставать определенную карточку
+async def get_card(card_id):
+    async with async_session as session:
+        return await session.scalar(select(Card).where(Card.id == card_id))
