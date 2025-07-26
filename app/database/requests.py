@@ -13,6 +13,7 @@ async def set_user(tg_id):
             return False
         return True if user.name else False
 
+
 # Функция добавления имени пользователю
 async def update_user(tg_id, name):
     async with async_session() as session:
@@ -20,7 +21,22 @@ async def update_user(tg_id, name):
 
         await session.commit()
 
+
 # Функция выбора колонки name пользователя по его tg_id
 async def select_user(tg_id):
     async with async_session() as session:
         return await session.scalar(select(User.name).where(User.tg_id == tg_id))
+
+
+# Функция выбора всех категорий
+async def get_categories():
+    async with async_session as session:
+        return await session.scalars(select(Category))
+
+
+# Функция выбора всех карточке по категории, которой выбрал пользователь
+async def get_cards_by_category(category_id):
+    async with async_session as session:
+        return await session.scalars(
+            select(Card).where(Card.category_id == category_id)
+        )

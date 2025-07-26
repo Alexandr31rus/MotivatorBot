@@ -14,6 +14,8 @@ user = Router()
 Если пользователя нет в БД, то предлагает ему зарегистрироваться. 
 Если пользователь есть в БД, то выводит его имя и приветственное сообщение
 """
+
+
 @user.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
     is_user = await set_user(message.from_user.id)
@@ -29,9 +31,12 @@ async def cmd_start(message: Message, state: FSMContext):
             reply_markup=kb.menu,
         )
 
+
 """
 Регистрация пользователя и добавление его имени в БД
 """
+
+
 @user.message(StateFilter("reg_name"))
 async def get_reg_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text.capitalize())
@@ -42,3 +47,17 @@ async def get_reg_name(message: Message, state: FSMContext):
         reply_markup=kb.menu,
     )
     await state.clear()
+
+
+@user.message(F.text == "📕 Категории")
+async def catalog(message: Message):
+    await message.answer("Выберите категорию 👀", reply_markup=await kb.categories())
+
+
+@user.callback_query(F.data.startswith("category_"))
+async def cards(callback: CallbackQuery):
+    await callback.answer()
+    category_id = callback.data.split("_")[1]
+    await callback.message.edit_text(
+        "Выберите категорию", reply_markup=await kb.cards(category_id)
+    )
