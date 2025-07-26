@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 
 from app.user import user
+from app.admin import admin
 from app.database.models import init_models
 
 load_dotenv()
@@ -18,7 +19,7 @@ async def main():
     bot = Bot(token=os.getenv("TOKEN"))
 
     dp = Dispatcher()
-    dp.include_router(user)  # Регистрация роутеров
+    dp.include_routers(user, admin)  # Регистрация роутеров
     dp.startup.register(startup)  # Регистрация функции startup
     dp.shutdown.register(shutdown)  # Регистрация функции shutdown
 
