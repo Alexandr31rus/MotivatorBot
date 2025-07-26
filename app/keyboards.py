@@ -65,7 +65,7 @@ async def cards(category_id):
     all_cards = await get_cards_by_category(category_id)
     for card in all_cards:
         keyboard.row(
-            InlineKeyboardButton(text="Далее", callback_data=f"card_{card.id + 1}")
+            InlineKeyboardButton(text=f"{card.name}", callback_data=f"card_{card.id}")
         )
     keyboard.row(InlineKeyboardButton(text="🔙 Назад", callback_data="categories"))
     return keyboard.as_markup()
@@ -78,6 +78,6 @@ async def back_to_categories(category_id):
                 InlineKeyboardButton(
                     text="🔙 Назад", callback_data=f"category_{category_id}"
                 )
-            ]
+            ],
         ]
     )

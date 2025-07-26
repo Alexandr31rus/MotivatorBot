@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 
-
+import random
 from app.database.requests import set_user, update_user, select_user, get_card
 import app.keyboards as kb
 
@@ -65,9 +65,15 @@ async def catalog(event: Message | CallbackQuery):
 async def cards(callback: CallbackQuery):
     await callback.answer()
     category_id = callback.data.split("_")[1]
-    await callback.message.edit_text(
-        "Выберите категорию 👀", reply_markup=await kb.cards(category_id)
-    )
+    try:
+        await callback.message.edit_text(
+            "Выберите категорию 👀", reply_markup=await kb.cards(category_id)
+        )
+    except:
+        await callback.message.delete()
+        await callback.message.answer(
+            "Выберите категорию 👀", reply_markup=await kb.cards(category_id)
+        )
 
 
 @user.callback_query(F.data.startswith("card_"))

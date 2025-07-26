@@ -30,13 +30,13 @@ async def select_user(tg_id):
 
 # Функция выбора всех категорий
 async def get_categories():
-    async with async_session as session:
+    async with async_session() as session:
         return await session.scalars(select(Category))
 
 
 # Функция выбора всех карточке по категории, которой выбрал пользователь
 async def get_cards_by_category(category_id):
-    async with async_session as session:
+    async with async_session() as session:
         return await session.scalars(
             select(Card).where(Card.category_id == category_id)
         )
@@ -44,5 +44,5 @@ async def get_cards_by_category(category_id):
 
 # По id доставать определенную карточку
 async def get_card(card_id):
-    async with async_session as session:
+    async with async_session() as session:
         return await session.scalar(select(Card).where(Card.id == card_id))

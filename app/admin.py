@@ -18,3 +18,7 @@ class Admin(Filter):
 @admin.message(Admin(), Command('admin'))
 async def admin_panel(message: Message):
     await message.answer('Добро пожаловать в админ панель')
+
+@admin.message(Admin(), F.photo)
+async def get_photo(message: Message):
+    await message.answer(message.photo[-1].file_id)

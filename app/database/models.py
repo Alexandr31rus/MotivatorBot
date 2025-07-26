@@ -35,6 +35,7 @@ class Card(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     image: Mapped[str] = mapped_column(String(256))
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
+    name: Mapped[str] = mapped_column(String(25))
 
 
 # Создание функции init_models для создания базы данных с тремя таблицами
