@@ -6,8 +6,8 @@ from aiogram.types import (
 )
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from app.database.requests import get_categories, get_cards_by_category
-
+from app.database.requests import get_categories, get_cards_by_category, get_cards_by
+from sqlalchemy import func
 menu = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="🙎‍♂️ Профиль")],
@@ -16,6 +16,25 @@ menu = ReplyKeyboardMarkup(
     resize_keyboard=True,
     input_field_placeholder="Выберите пункт меню... 👇",
 )
+
+# random_images = InlineKeyboardMarkup(
+#     inline_keyboard=[
+#         [InlineKeyboardButton(text='random', callback_data=f"card_{card.id}")]
+#     ]
+# )
+
+async def random_images():
+    # keyboard = InlineKeyboardBuilder()
+    all_cards = await get_cards_by()
+    # for card in all_cards:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text='random', callback_data=f"card_{all_cards.id}")]
+            ])
+    #     keyboard.add(
+    #         InlineKeyboardButton(text=f"random", callback_data=f"card_{card.id}")
+    #     )
+    # return keyboard.adjust(1).as_markup()
 
 """
 Асинхронная функция, которая предлагает пользователю при регистрации вести его имея
