@@ -50,8 +50,10 @@ async def get_card(card_id):
 
 async def get_cards_by():
     async with async_session() as session:
-        return await session.scalars(select(Card))
+        result = await session.scalars(select(Card))
+        find = result.fetchall()
+        return random.choice(find)
 
 async def random_cards(card_id: int):
     async with async_session() as session:
-        return await session.scalars(select(Card).where(Card.id == card_id))
+        return await session.scalar(select(Card).where(Card.id == card_id))

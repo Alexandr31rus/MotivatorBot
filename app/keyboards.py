@@ -26,11 +26,11 @@ menu = ReplyKeyboardMarkup(
 async def random_images():
     # keyboard = InlineKeyboardBuilder()
     all_cards = await get_cards_by()
-    for card in all_cards:
-        return InlineKeyboardMarkup(
-            inline_keyboard=[
-                [InlineKeyboardButton(text='random', callback_data=f"card_{card.id}")]
-                ])
+    # for card in all_cards:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text='random', callback_data=f"card_{all_cards.id}")]
+            ])
     #     keyboard.add(
     #         InlineKeyboardButton(text=f"random", callback_data=f"card_{card.id}")
     #     )

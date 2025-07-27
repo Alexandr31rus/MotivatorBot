@@ -77,11 +77,11 @@ async def card_infos(callback: CallbackQuery):
     print(card_id)
     # card = await get_card(card_id)
     all_card = await random_cards(int(card_id))
-    for card in all_card:
-        await callback.message.delete()
-        await callback.message.answer_photo(
-            photo=card.image, reply_markup=await kb.random_images()
-        )
+    # for card in all_card:
+    await callback.message.delete()
+    await callback.message.answer_photo(
+        photo=all_card.image, reply_markup=await kb.random_images()
+    )
 
 @user.callback_query(F.data.startswith("category_"))
 async def cards(callback: CallbackQuery):
