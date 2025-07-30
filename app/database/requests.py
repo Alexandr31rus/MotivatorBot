@@ -1,7 +1,6 @@
 from app.database.models import async_session, User, Category, Card
-from sqlalchemy import select, update
+from sqlalchemy import select, update, insert
 import random
-from sqlalchemy.sql.expression import func
 
 # Функция создания нового пользователя
 async def set_user(tg_id):
@@ -48,6 +47,7 @@ async def get_card(card_id):
     async with async_session() as session:
         return await session.scalar(select(Card).where(Card.id == card_id))
 
+# По id доставать рандомную карточку
 async def get_cards_by():
     async with async_session() as session:
         result = await session.scalars(select(Card))
@@ -57,3 +57,9 @@ async def get_cards_by():
 async def random_cards(card_id: int):
     async with async_session() as session:
         return await session.scalar(select(Card).where(Card.id == card_id))
+    
+async def add_card(image, category_id):
+    async with async_session() as session:
+        await session.execute(insert(Card).values(image=image, category_id=category_id))
+
+        await session.commit()

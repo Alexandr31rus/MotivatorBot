@@ -17,24 +17,15 @@ menu = ReplyKeyboardMarkup(
     input_field_placeholder="Выберите пункт меню... 👇",
 )
 
-# random_images = InlineKeyboardMarkup(
-#     inline_keyboard=[
-#         [InlineKeyboardButton(text='random', callback_data=f"card_{card.id}")]
-#     ]
-# )
-
+'''
+Inline клавиатура рандомно выбирающая картинки из БД
+'''
 async def random_images():
-    # keyboard = InlineKeyboardBuilder()
     all_cards = await get_cards_by()
-    # for card in all_cards:
     return InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text='random', callback_data=f"card_{all_cards.id}")]
+            [InlineKeyboardButton(text='Зарядиться мотивацией и позитивом', callback_data=f"card_{all_cards.id}")]
             ])
-    #     keyboard.add(
-    #         InlineKeyboardButton(text=f"random", callback_data=f"card_{card.id}")
-    #     )
-    # return keyboard.adjust(1).as_markup()
 
 """
 Асинхронная функция, которая предлагает пользователю при регистрации вести его имея
