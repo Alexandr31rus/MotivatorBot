@@ -2,7 +2,13 @@ from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
-from app.database.requests import set_user, update_user, select_user, get_card, random_cards
+from app.database.requests import (
+    set_user,
+    update_user,
+    select_user,
+    get_card,
+    random_cards,
+)
 import app.keyboards as kb
 
 user = Router()
@@ -58,18 +64,15 @@ async def get_reg_name(message: Message, state: FSMContext):
 #             "Выберите категорию 👀", reply_markup=await kb.categories()
 #         )
 
-@user.message(F.text == '📕 Категории')
-async def random_card(message: Message):
-    await message.answer_photo(photo='AgACAgIAAxkBAAIEG2iKbORWAiUMbeAX6aUykEsu6HBiAAK0AzIbX8lZSJGe9UVkByp1AQADAgADeQADNgQ', 
-                               caption='Нажмите кнопку снизу, чтобы получить порцию мотивации 💪 или котиков 😽', reply_markup=await kb.random_images())
-    # await message.answer('Нажмите кнопку снизу, чтобы получить порцию мотивации 💪 или котиков 😽', reply_markup=await kb.random_images())
 
-# @user.callback_query(F.data == 'random_img')
-# async def random_img(callback: CallbackQuery):
-#     await callback.answer()
-#     img = await random_cards()
-#     await callback.message.delete()
-#     await callback.message.answer_photo(photo=img, reply_markup=kb.random_images)
+@user.message(F.text == "📕 Категории")
+async def random_card(message: Message):
+    await message.answer_photo(
+        photo="AgACAgIAAxkBAAIEG2iKbORWAiUMbeAX6aUykEsu6HBiAAK0AzIbX8lZSJGe9UVkByp1AQADAgADeQADNgQ",
+        caption="Нажмите кнопку снизу, чтобы получить порцию мотивации 💪 или котиков 😽",
+        reply_markup=await kb.random_images(),
+    )
+
 
 @user.callback_query(F.data.startswith("card_"))
 async def card_infos(callback: CallbackQuery):
@@ -80,6 +83,7 @@ async def card_infos(callback: CallbackQuery):
     await callback.message.answer_photo(
         photo=all_card.image, reply_markup=await kb.random_images()
     )
+
 
 # @user.callback_query(F.data.startswith("category_"))
 # async def cards(callback: CallbackQuery):
