@@ -6,6 +6,8 @@ from aiogram.filters import Command, Filter, StateFilter
 from aiogram.fsm.context import FSMContext
 from app.database.requests import add_card
 
+import app.keyboards as kb
+
 load_dotenv()
 
 ADMIN = os.getenv('ADMINS')
@@ -17,10 +19,16 @@ class Admin(Filter):
     async def __call__(self, message: Message):
         return str(message.from_user.id) in ADMIN
     
-@admin.message(Admin(), Command('admin'))
-async def admin_panel(message: Message, state: FSMContext):
+@admin.callback_query(F.data == 'admin_mod')   
+@admin.message(Admin(), Command('god_mode'))
+async def admin_panel(event: Message | CallbackQuery, state: FSMContext):
     await state.set_state('add_img')
-    await message.answer('Добро пожаловать в админ панель\n\nДобавьте картинку')
+    if isinstance (event, Message):
+        await event.answer('Добро пожаловать в админ панель\n\nДобавьте картинку')
+    else:
+        await event.answer('Вы вернулись в начало')
+        await event.message.edit_text('Добро пожаловать в админ панель\n\nДобавьте картинку')
+
 
 @admin.message(Admin(), F.photo, StateFilter('add_img'))
 async def get_photo(message: Message, state: FSMContext):
@@ -39,5 +47,5 @@ async def get_category(message: Message, state: FSMContext):
     # image = data.get('image')
     # category_id = data.get('category_id')
     await add_card(data['image'], data['category_id'])
-    await message.answer('Картинка добавлена успешно')
+    await message.answer('Картинка добавлена успешно', reply_markup=kb.admin_mod)
     await state.clear()

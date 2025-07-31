@@ -7,11 +7,11 @@ from aiogram.types import (
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.database.requests import get_categories, get_cards_by_category, get_cards_by
-from sqlalchemy import func
+
 menu = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="🙎‍♂️ Профиль")],
-        [KeyboardButton(text="📕 Категории")],
+        # [KeyboardButton(text="🙎‍♂️ Профиль")],
+        [KeyboardButton(text="💪 Мотивация")],
     ],
     resize_keyboard=True,
     input_field_placeholder="Выберите пункт меню... 👇",
@@ -91,3 +91,8 @@ async def back_to_categories(category_id):
             ],
         ]
     )
+
+
+admin_mod = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Добавить ещё', callback_data='admin_mod')]
+])
