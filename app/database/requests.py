@@ -21,6 +21,10 @@ async def update_user(tg_id, name):
 
         await session.commit()
 
+# Функция выбора всех пользователей из БД
+async def select_all_user():
+    async with async_session() as session:
+        return await session.scalars(select(User.tg_id))
 
 # Функция выбора колонки name пользователя по его tg_id
 async def select_user(tg_id):
@@ -57,7 +61,8 @@ async def get_cards_by():
 async def random_cards(card_id: int):
     async with async_session() as session:
         return await session.scalar(select(Card).where(Card.id == card_id))
-    
+
+# Добавление картинок из админ панели в БД
 async def add_card(image, category_id):
     async with async_session() as session:
         await session.execute(insert(Card).values(image=image, category_id=category_id))

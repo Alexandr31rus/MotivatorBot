@@ -6,7 +6,6 @@ from app.database.requests import (
     set_user,
     update_user,
     select_user,
-    get_card,
     random_cards,
 )
 import app.keyboards as kb
@@ -52,19 +51,6 @@ async def get_reg_name(message: Message, state: FSMContext):
     )
     await state.clear()
 
-
-# @user.callback_query(F.data == "categories")
-# @user.message(F.text == "📕 Категории")
-# async def catalog(event: Message | CallbackQuery):
-#     if isinstance(event, Message):
-#         await event.answer("Выберите категорию 👀", reply_markup=await kb.categories())
-#     else:
-#         await event.answer("Вы вернулись назад")
-#         await event.message.edit_text(
-#             "Выберите категорию 👀", reply_markup=await kb.categories()
-#         )
-
-
 @user.message(F.text == "💪 Мотивация")
 async def random_card(message: Message):
     await message.answer_photo(
@@ -84,28 +70,3 @@ async def card_infos(callback: CallbackQuery):
         photo=all_card.image, reply_markup=await kb.random_images()
     )
 
-
-# @user.callback_query(F.data.startswith("category_"))
-# async def cards(callback: CallbackQuery):
-#     await callback.answer()
-#     category_id = callback.data.split("_")[1]
-#     try:
-#         await callback.message.edit_text(
-#             "Выберите категорию 👀", reply_markup=await kb.cards(category_id)
-#         )
-#     except:
-#         await callback.message.delete()
-#         await callback.message.answer(
-#             "Выберите категорию 👀", reply_markup=await kb.cards(category_id)
-#         )
-
-
-# @user.callback_query(F.data.startswith("card_"))
-# async def card_info(callback: CallbackQuery):
-#     await callback.answer()
-#     card_id = callback.data.split("_")[1]
-#     card = await get_card(card_id)
-#     await callback.message.delete()
-#     await callback.message.answer_photo(
-#         photo=card.image, reply_markup=await kb.back_to_categories(card.category_id)
-#     )
