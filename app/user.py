@@ -30,7 +30,7 @@ async def cmd_start(message: Message, state: FSMContext):
         await state.set_state("reg_name")
     else:
         await message.answer(
-            f"{await select_user(message.from_user.id)}, добро пожаловать!👋\n\nИспользуй кнопки ниже, чтобы зарядиться мотивацией и позитивом",
+            f"{await select_user(message.from_user.id)}, добро пожаловать!👋\n\nИспользуй кнопки ниже, чтобы зарядиться мотивацией.",
             reply_markup=kb.menu,
         )
 
@@ -55,7 +55,7 @@ async def get_reg_name(message: Message, state: FSMContext):
 async def random_card(message: Message):
     await message.answer_photo(
         photo="AgACAgIAAxkBAAIEG2iKbORWAiUMbeAX6aUykEsu6HBiAAK0AzIbX8lZSJGe9UVkByp1AQADAgADeQADNgQ",
-        caption="Нажмите кнопку снизу, чтобы получить порцию мотивации 💪 или котиков 😽",
+        caption="Нажмите кнопку снизу, чтобы получить порцию мотивации 💪",
         reply_markup=await kb.random_images(),
     )
 

@@ -24,7 +24,7 @@ async def random_images():
     all_cards = await get_cards_by()
     return InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text='Зарядиться мотивацией и позитивом', callback_data=f"card_{all_cards.id}")]
+            [InlineKeyboardButton(text='Зарядиться мотивацией', callback_data=f"card_{all_cards.id}")]
             ])
 
 """
